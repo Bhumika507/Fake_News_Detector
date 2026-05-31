@@ -83,7 +83,7 @@ print(classification_report(ytest,predict))
 joblib.dump(vectorize,'vectorize.joblib')
 joblib.dump(model,'model.joblib')
 
-!pip install streamlit
+
 
 # Commented out IPython magic to ensure Python compatibility.
 # %%writefile app.py
