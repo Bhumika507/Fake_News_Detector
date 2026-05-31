@@ -137,7 +137,7 @@ joblib.dump(model,'model.joblib')
 #         st.warning(" Please enter some text to analyze.")
 #
 
-!pip install streamlit
+
 !npm install -g localtunnel
 
 !streamlit run app.py & npx localtunnel --port 8501
