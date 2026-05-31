@@ -19,11 +19,10 @@ import string
 import joblib
 
 # Load datasets
-fake =(pd.read_csv('/content/fake.csv.zip'))
-true =(pd.read_csv('/content/true.csv.zip'))
+fake =(pd.read_csv('fake.csv.zip'))
+true =(pd.read_csv('true.csv.zip'))
 
-from google.colab import drive
-drive.mount('/content/drive')
+
 
 # To print fake data
 fake.head()
