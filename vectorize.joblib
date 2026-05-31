@@ -1,0 +1,5 @@
+import joblib
+
+# Loading the assets so the website can use them
+model = joblib.load('model.joblib')
+vectorize = joblib.load('vectorize.joblib')
