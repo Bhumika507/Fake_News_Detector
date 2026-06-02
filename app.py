@@ -2,23 +2,42 @@ import streamlit as st
 import joblib
 import re
 
-# 1. LOAD SAVED ASSETS (Must match filenames in your training code)
-model = joblib.load('model.joblib')
-vectorize = joblib.load('vectorize.joblib')
+st.set_page_config(page_title="Fake News Detector")
 
-# 2. PREPROCESSING FUNCTION (Must match your training logic)
+# 1. LOAD SAVED ASSETS
+try:
+    model = joblib.load('model.joblib')
+    vectorize = joblib.load('vectorize.joblib')
+except FileNotFoundError:
+    st.title("Fake News Detector")
+    st.error("Required model files not found: model.joblib and vectorize.joblib.")
+    st.info("Run the training script first to generate these files.")
+    st.stop()
+except Exception as exc:
+    st.title("Fake News Detector")
+    st.error(f"Unable to load saved model files: {exc}")
+    st.stop()
+
+# 2. PREPROCESSING FUNCTION
+
 def clear_title(title):
+    """Clean the input title before prediction."""
     title = title.lower()
-    title = re.sub("\n", "", title)
+    title = re.sub(r"\n", "", title)
     return title
 
-# 3. UI DESIGN (Streamlit)
+# 3. UI DESIGN
 st.set_page_config(page_title="Fake News Detector")
-st.title("🔍 Fake News Detector")
+
+st.title("Fake News Detector")
 st.markdown("---")
 st.write("Enter a news article title below to check whether it is **Fake** or **Real**.")
 
-user_input = st.text_area("News Title to Analyze:", placeholder="Paste title here...", height=150)
+user_input = st.text_area(
+    "News Title to Analyze:",
+    placeholder="Paste title here...",
+    height=150,
+)
 
 if st.button("Check"):
     if user_input.strip() != "":
@@ -28,8 +47,8 @@ if st.button("Check"):
 
         st.subheader("Prediction Result:")
         if prediction == 1:
-            st.success("✅ This news is **REAL**")
+            st.success("This news is **REAL**")
         else:
-            st.error("🚨 This news is **FAKE**")
+            st.error("This news is **FAKE**")
     else:
-        st.warning("⚠️ Please enter some text to analyze.")
+        st.warning("Please enter some text to analyze.")
